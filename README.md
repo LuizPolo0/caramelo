@@ -8,20 +8,6 @@ lar temporário ou registrar atendimento veterinário.
 🚀 **Aplicação em produção:** https://caramelo-two.vercel.app
 📄 **Diagramas e visão geral do projeto:** https://LuizPolo0.github.io/caramelo/
 
-## Sumário
-
-- [Funcionalidades](#funcionalidades)
-- [Papéis de usuário](#papéis-de-usuário)
-- [Stack técnica](#stack-técnica)
-- [Arquitetura](#arquitetura)
-- [Estrutura do projeto](#estrutura-do-projeto)
-- [Pré-requisitos](#pré-requisitos)
-- [Configuração do Supabase](#configuração-do-supabase)
-- [Rodando localmente](#rodando-localmente)
-- [Scripts disponíveis](#scripts-disponíveis)
-- [Deploy em produção (Vercel)](#deploy-em-produção-vercel)
-- [Publicando os diagramas no GitHub Pages](#publicando-os-diagramas-no-github-pages)
-
 ## Funcionalidades
 
 - 🔐 Cadastro e login (e-mail/senha e Google OAuth)
