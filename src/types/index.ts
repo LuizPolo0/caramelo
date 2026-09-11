@@ -12,7 +12,6 @@ export interface Profile {
   role: Role
   avatar_url?: string
   bairro?: string
-  reputacao: number
   created_at: string
 }
 

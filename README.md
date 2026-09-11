@@ -30,7 +30,7 @@ lar temporário ou registrar atendimento veterinário.
 - 🐕 Página de detalhe da ocorrência com histórico de resgates
 - 🤲 Confirmação de resgate, lar temporário ou atendimento veterinário
 - 📊 Painel dedicado para ONGs e veterinários acompanharem ocorrências e resgates
-- 👤 Perfil do usuário com estatísticas e reputação
+- 👤 Perfil do usuário com estatísticas de ocorrências reportadas e resgates
 
 ## Papéis de usuário
 

@@ -14,8 +14,7 @@ import {
   Save,
   LogOut,
   MapPin,
-  FileText,
-  Star
+  FileText
 } from 'lucide-react'
 import { Card, CardContent, Switch, Avatar, AvatarFallback } from '@/components/ui/primitives'
 import { Button } from '@/components/ui/button'
@@ -111,11 +110,10 @@ export default function PerfilPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
+        <div className="grid grid-cols-2 gap-2.5 mb-5">
           {[
             [<FileText size={18} />,stats.reportados,'Reportados','text-amber-700'],
-            [<Handshake size={18} />,stats.resgates,'Resgates','text-blue-700'],
-            [<Star size={18} />,profile?.reputacao?.toFixed(1)||'5.0','Reputação','text-amber-500']
+            [<Handshake size={18} />,stats.resgates,'Resgates','text-blue-700']
           ].map(([icon,num,label,color],i)=>(
             <div key={i} className="bg-white rounded-xl border border-border p-3 text-center">
               <div className="flex justify-center mb-1">{icon}</div>

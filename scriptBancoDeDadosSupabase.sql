@@ -7,7 +7,6 @@ create table public.profiles (
   role text check (role in ('reporter','volunteer','ong','vet')) default 'reporter',
   avatar_url text,
   bairro text,
-  reputacao numeric default 5.0,
   created_at timestamptz default now()
 );
 
