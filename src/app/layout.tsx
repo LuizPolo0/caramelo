@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import  './globals.css'
 import { AuthProvider } from '@/hooks/useAuth'
 import { ToastProviderWrapper } from '@/hooks/useToast'
@@ -6,6 +6,9 @@ import { ToastProviderWrapper } from '@/hooks/useToast'
 export const metadata: Metadata = {
   title: 'Caramelo do Bem',
   description: 'Reporte cachorros em situação de rua',
+}
+
+export const viewport: Viewport = {
   themeColor: '#F5A623',
 }
 

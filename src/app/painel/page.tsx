@@ -83,6 +83,12 @@ export default function PainelPage() {
     fetchAll()
   }
 
+  const atualizarResgateStatus = async (id:string, status:string) => {
+    await supabase.from('resgates').update({status}).eq('id',id)
+    addToast('Status do resgate atualizado','success')
+    fetchAll()
+  }
+
   const stats = {
     urgentes: ocs.filter(o=>o.urgencia==='Urgente'&&o.status==='ativo').length,
     em_resgate: ocs.filter(o=>o.status==='em_resgate').length,
@@ -174,6 +180,89 @@ export default function PainelPage() {
                 </CardContent>
               </Card>
             ))}
+          </TabsContent>
+
+          <TabsContent value="casos">
+            <div className="flex gap-2 mb-4">
+              <Select value={fsStatus} onValueChange={setFsStatus}>
+                <SelectTrigger className="flex-1"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos os status</SelectItem>
+                  <SelectItem value="ativo">Ativo</SelectItem>
+                  <SelectItem value="em_resgate">Em resgate</SelectItem>
+                  <SelectItem value="resgatado">Resgatado</SelectItem>
+                  <SelectItem value="arquivado">Arquivado</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={fsUrgencia} onValueChange={setFsUrgencia}>
+                <SelectTrigger className="flex-1"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todas urgências</SelectItem>
+                  <SelectItem value="Urgente">Urgente</SelectItem>
+                  <SelectItem value="Atenção">Atenção</SelectItem>
+                  <SelectItem value="Estável">Estável</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {ocsF.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <ClipboardList size={40} className="mx-auto mb-3" />
+                <p className="font-bold">Nenhum caso encontrado com esses filtros.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {ocsF.map(oc => {
+                  const resgatesDoCaso = resgates.filter(r => r.ocorrencia_id === oc.id)
+                  return (
+                    <Card key={oc.id}>
+                      <div className={`h-1.5 ${oc.urgencia==='Urgente'?'bg-red-500':oc.status==='resgatado'?'bg-green-600':'bg-amber-400'}`} />
+                      <CardContent className="pt-4">
+                        <div className="flex justify-between items-start gap-2 mb-2">
+                          <p className="font-extrabold text-[15px] flex-1">{oc.titulo}</p>
+                          <Badge variant={oc.status==='resgatado'?'resgatado':oc.status==='em_resgate'?'em_resgate':oc.urgencia==='Urgente'?'urgente':'atencao'}>
+                            {oc.status==='ativo' ? oc.urgencia : oc.status==='em_resgate' ? 'Em resgate' : oc.status==='resgatado' ? 'Resgatado' : 'Arquivado'}
+                          </Badge>
+                        </div>
+
+                        <p className="text-xs text-muted-foreground mb-3 flex items-center gap-3 flex-wrap">
+                          <span className="flex items-center gap-1"><MapPin size={12}/> {oc.endereco}</span>
+                          <span className="flex items-center gap-1"><Clock size={12}/> {timeAgo(oc.created_at)}</span>
+                        </p>
+
+                        {resgatesDoCaso.length > 0 && (
+                          <div className="mb-3 space-y-1.5">
+                            {resgatesDoCaso.map(r => (
+                              <div key={r.id} className="flex items-center justify-between gap-2 bg-secondary rounded-lg px-2.5 py-1.5">
+                                <span className="text-xs font-bold">{(r as any).profiles?.nome || 'Voluntário'}</span>
+                                <select
+                                  value={r.status}
+                                  onChange={e=>atualizarResgateStatus(r.id, e.target.value)}
+                                  className="text-xs font-bold bg-white border border-border rounded-md px-1.5 py-0.5"
+                                >
+                                  <option value="confirmado">Confirmado</option>
+                                  <option value="em_andamento">Em andamento</option>
+                                  <option value="concluido">Concluído</option>
+                                  <option value="cancelado">Cancelado</option>
+                                </select>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="ghost" className="flex-1" onClick={()=>router.push(`/ocorrencia/${oc.id}`)}>Ver detalhes</Button>
+                          {oc.status!=='resgatado' && (
+                            <Button size="sm" className="flex-1" onClick={()=>atualizarStatus(oc.id,'resgatado')}>Marcar resgatado</Button>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="voluntarios">

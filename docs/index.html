@@ -316,10 +316,19 @@ erDiagram
     text observacao
     timestamptz created_at
   }
+  MENSAGENS {
+    uuid id PK
+    uuid ocorrencia_id FK
+    uuid user_id FK
+    text texto
+    text tipo "texto | sistema | foto"
+    timestamptz created_at
+  }
 
   PROFILES ||--o{ OCORRENCIAS : "reporta"
   PROFILES ||--o{ RESGATES : "voluntaria-se"
   OCORRENCIAS ||--o{ RESGATES : "recebe"
+  OCORRENCIAS ||--o{ MENSAGENS : "possui historico"
 </pre>
     </div>
   </section>

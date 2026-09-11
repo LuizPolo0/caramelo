@@ -38,9 +38,19 @@ create table public.resgates (
   created_at timestamptz default now()
 );
 
+create table public.mensagens (
+  id uuid default uuid_generate_v4() primary key,
+  ocorrencia_id uuid references public.ocorrencias(id) on delete cascade,
+  user_id uuid references public.profiles(id) on delete set null,
+  texto text not null,
+  tipo text check (tipo in ('texto','sistema','foto')) default 'texto',
+  created_at timestamptz default now()
+);
+
 alter table public.profiles enable row level security;
 alter table public.ocorrencias enable row level security;
 alter table public.resgates enable row level security;
+alter table public.mensagens enable row level security;
 
 create policy "Perfis são públicos"
   on public.profiles
@@ -72,6 +82,11 @@ create policy "Usuário edita própria ocorrência"
   for update
   using (auth.uid() = user_id);
 
+create policy "Usuário autenticado atualiza status da ocorrência"
+  on public.ocorrencias
+  for update
+  using (auth.uid() is not null);
+
 create policy "Resgates são públicos"
   on public.resgates
   for select
@@ -86,6 +101,26 @@ create policy "Voluntário atualiza próprio resgate"
   on public.resgates
   for update
   using (auth.uid() = voluntario_id);
+
+create policy "ONG ou veterinário atualiza qualquer resgate"
+  on public.resgates
+  for update
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role in ('ong','vet')
+    )
+  );
+
+create policy "Mensagens são públicas"
+  on public.mensagens
+  for select
+  using (true);
+
+create policy "Usuário autenticado envia mensagem"
+  on public.mensagens
+  for insert
+  with check (auth.uid() is not null);
 
 create or replace function public.handle_new_user()
 returns trigger as $$

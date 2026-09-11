@@ -90,12 +90,33 @@ docs/                            # Página estática publicada no GitHub Pages
 
 1. Crie um projeto em [supabase.com](https://supabase.com/).
 2. Em **SQL Editor**, execute o conteúdo do arquivo [`scriptBancoDeDadosSupabase.sql`](./scriptBancoDeDadosSupabase.sql)
-   para criar as tabelas `profiles`, `ocorrencias`, `resgates`, as policies de RLS e os triggers.
+   para criar as tabelas `profiles`, `ocorrencias`, `resgates`, `mensagens`, as policies de RLS e os triggers.
 3. Em **Authentication → Providers**, habilite o provedor de e-mail e, se for usar login social,
    o provedor Google.
-4. Em **Storage**, crie um bucket público para armazenar as fotos das ocorrências (usado pelo campo `foto_url`).
+4. Em **Storage**, crie um bucket público chamado **`fotos`** para armazenar as fotos das ocorrências
+   (o código faz upload em `fotos/ocorrencias/...` e salva a URL pública no campo `foto_url`).
 5. Em **Project Settings → API**, copie a **Project URL** e a **anon public key** — elas vão para as
    variáveis de ambiente no próximo passo.
+
+> Se o seu projeto Supabase já existia antes desta versão, ele não tem a tabela `mensagens` nem as
+> policies de atualização de status adicionadas depois. Rode este complemento uma única vez no **SQL Editor**:
+> ```sql
+> create table if not exists public.mensagens (
+>   id uuid default uuid_generate_v4() primary key,
+>   ocorrencia_id uuid references public.ocorrencias(id) on delete cascade,
+>   user_id uuid references public.profiles(id) on delete set null,
+>   texto text not null,
+>   tipo text check (tipo in ('texto','sistema','foto')) default 'texto',
+>   created_at timestamptz default now()
+> );
+> alter table public.mensagens enable row level security;
+> create policy "Mensagens são públicas" on public.mensagens for select using (true);
+> create policy "Usuário autenticado envia mensagem" on public.mensagens for insert with check (auth.uid() is not null);
+> create policy "Usuário autenticado atualiza status da ocorrência" on public.ocorrencias for update using (auth.uid() is not null);
+> create policy "ONG ou veterinário atualiza qualquer resgate" on public.resgates for update using (
+>   exists (select 1 from public.profiles where profiles.id = auth.uid() and profiles.role in ('ong','vet'))
+> );
+> ```
 
 ## Rodando localmente
 

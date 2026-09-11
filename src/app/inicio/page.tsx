@@ -131,6 +131,9 @@ export default function InicioPage() {
           {ocs.map(oc => (
             <Card key={oc.id} className="cursor-pointer hover:-translate-y-0.5 transition-transform" onClick={() => router.push(`/ocorrencia/${oc.id}`)}>
               <div className={`h-1.5 ${oc.urgencia === 'Urgente' ? 'bg-red-500' : oc.status === 'resgatado' ? 'bg-green-600' : 'bg-amber-400'}`} />
+              {oc.foto_url && (
+                <img src={oc.foto_url} alt={oc.titulo} className="w-full h-40 object-cover" />
+              )}
               <CardContent className="pt-4">
                 <div className="flex justify-between items-start gap-2 mb-2">
                   <p className="font-extrabold text-[15px] text-foreground flex-1">{oc.titulo}</p>
