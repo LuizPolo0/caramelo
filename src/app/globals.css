@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 43 100% 98%;
+    --foreground: 25 60% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 60% 12%;
+    --primary: 37 91% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 60% 95%;
+    --secondary-foreground: 25 60% 25%;
+    --muted: 30 30% 93%;
+    --muted-foreground: 25 30% 45%;
+    --accent: 37 91% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 5 70% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 25 30% 88%;
+    --input: 25 30% 88%;
+    --ring: 37 91% 55%;
+    --radius: 0.75rem;
+
+    --amber: #F5A623;
+    --amber-dark: #C47A0D;
+    --amber-light: #FFF3DC;
+    --brown: #7C4A1E;
+    --brown-light: #F7EFE5;
+    --green: #3B8A5A;
+    --green-light: #E8F5EE;
+    --red: #D94F3D;
+    --red-light: #FDECEA;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+  }
+
+  * { @apply border-border; }
+
+  body { @apply bg-background text-foreground antialiased; font-family: 'Poppins', sans-serif; }
+  h1, h2, h3 { @apply font-semibold; }
+}
+
+@layer components {
+  .badge-urgente  { @apply bg-red-50 text-red-600 border border-red-200; }
+  .badge-atencao  { @apply bg-amber-50 text-amber-700 border border-amber-200; }
+  .badge-resgatado { @apply bg-green-50 text-green-700 border border-green-200; }
+  .badge-em_resgate { @apply bg-blue-50 text-blue-700 border border-blue-200; }
+
+  .card-stripe        { @apply h-1.5 bg-amber-400; }
+  .card-stripe-urgente  { @apply h-1.5 bg-red-500; }
+  .card-stripe-resgatado { @apply h-1.5 bg-green-600; }
+
+  .nav-item { @apply flex flex-col items-center gap-0.5 text-[10px] font-bold text-muted-foreground transition-colors; }
+  .nav-item.active { @apply text-amber-700; }
+
+  .map-container { @apply rounded-xl overflow-hidden border border-border; height: 400px; }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.leaflet-popup-content { margin: 12px 14px !important; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D3C4B0; border-radius: 4px; }

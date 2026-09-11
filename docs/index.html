@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caramelo do Bem — Documentação do Projeto</title>
+<meta name="description" content="Plataforma para reportar, mapear e coordenar o resgate de cães em situação de rua." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --amber: #F5A623;
+    --amber-dark: #C47A0D;
+    --amber-light: #FFF3DC;
+    --brown: #7C4A1E;
+    --brown-light: #F7EFE5;
+    --green: #3B8A5A;
+    --green-light: #E8F5EE;
+    --red: #D94F3D;
+    --blue: #185FA5;
+    --bg: #FFFBF3;
+    --text: #3A2A17;
+    --muted: #8A7860;
+    --card: #FFFFFF;
+    --border: #EFE2CE;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
+    color: #fff;
+    padding: 64px 24px 80px;
+    text-align: center;
+    position: relative;
+  }
+  .logo-badge {
+    width: 72px; height: 72px;
+    background: var(--brown);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 34px;
+  }
+  header.hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0 0 12px;
+  }
+  header.hero p.tagline {
+    font-size: 1.15rem;
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+  .badges {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .badges a {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .badges a:hover { background: rgba(255,255,255,0.32); }
+
+  main {
+    max-width: 980px;
+    margin: -40px auto 0;
+    padding: 0 24px 80px;
+  }
+  section.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px clamp(20px, 5vw, 48px);
+    margin-bottom: 28px;
+    box-shadow: 0 4px 24px rgba(124, 74, 30, 0.06);
+  }
+  section.card h2 {
+    font-family: 'Fraunces', serif;
+    color: var(--brown);
+    font-size: 1.6rem;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section.card h3 {
+    color: var(--brown);
+    font-size: 1.05rem;
+    margin: 24px 0 8px;
+  }
+  p { color: var(--text); }
+  .muted { color: var(--muted); font-size: 0.95rem; }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .role-card {
+    background: var(--amber-light);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .role-card b { color: var(--brown-dark, #7C4A1E); display: block; margin-bottom: 6px; }
+  .role-card.volunteer { background: var(--green-light); }
+  .role-card.vet, .role-card.ong { background: #E6F1FB; }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .feature-list li {
+    background: var(--brown-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+  }
+
+  .mermaid-wrap {
+    overflow-x: auto;
+    background: #FCFAF5;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 12px;
+  }
+
+  .stack-pills {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  }
+  .stack-pills span {
+    background: var(--brown);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  footer a { color: var(--brown); }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #1C140A; color: #F3E9D8; }
+    section.card { background: #26190D; border-color: #40301B; box-shadow: none; }
+    .mermaid-wrap { background: #201709; border-color: #40301B; }
+    .role-card { background: #33230F; border-color: #40301B; }
+    .role-card.volunteer { background: #10281B; }
+    .role-card.vet, .role-card.ong { background: #0F2338; }
+    .feature-list li { background: #33230F; }
+    p, .muted { color: #D8C6AC; }
+    footer { color: #B39F80; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo-badge">🐾</div>
+  <h1>Caramelo do Bem</h1>
+  <p class="tagline">Plataforma colaborativa para reportar, mapear e coordenar o resgate de cães em situação de rua.</p>
+  <div class="badges">
+    <a href="https://github.com/LuizPolo0/caramelo" target="_blank" rel="noopener">📦 Código-fonte</a>
+    <a href="#" id="live-app-link" target="_blank" rel="noopener">🚀 Acessar aplicação</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>📋 Sobre o projeto</h2>
+    <p>
+      <strong>Caramelo do Bem</strong> conecta quem encontra um cão em situação de rua a voluntários,
+      ONGs e veterinários dispostos a ajudar. Qualquer pessoa pode reportar uma ocorrência com foto,
+      localização e nível de urgência; a ocorrência aparece no mapa da cidade e voluntários podem se
+      candidatar para o resgate, abrigo temporário ou atendimento veterinário.
+    </p>
+    <div class="stack-pills">
+      <span>Next.js 14 (App Router)</span>
+      <span>React 18</span>
+      <span>TypeScript</span>
+      <span>Supabase (Auth + Postgres)</span>
+      <span>Tailwind CSS</span>
+      <span>Leaflet / react-leaflet</span>
+      <span>Radix UI</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>👥 Papéis de usuário</h2>
+    <div class="role-grid">
+      <div class="role-card">
+        <b>🙋 Reportador</b>
+        Registra ocorrências de cães encontrados na rua, com foto, endereço e urgência.
+      </div>
+      <div class="role-card volunteer">
+        <b>🤝 Voluntário</b>
+        Visualiza o mapa de ocorrências e se candidata para resgate ou lar temporário.
+      </div>
+      <div class="role-card ong">
+        <b>🏠 ONG / Abrigo</b>
+        Acompanha ocorrências e resgates em um painel dedicado.
+      </div>
+      <div class="role-card vet">
+        <b>🩺 Veterinário</b>
+        Registra atendimentos veterinários vinculados a uma ocorrência.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>✨ Funcionalidades</h2>
+    <ul class="feature-list">
+      <li>🔐 Cadastro e login (e-mail/senha e Google)</li>
+      <li>📢 Reportar ocorrência com foto e geolocalização</li>
+      <li>🗺️ Mapa interativo de ocorrências ativas</li>
+      <li>🐕 Detalhe da ocorrência com histórico de resgates</li>
+      <li>🤲 Confirmação de resgate, lar temporário ou atendimento vet.</li>
+      <li>📊 Painel dedicado para ONGs e veterinários</li>
+      <li>👤 Perfil com estatísticas e reputação</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>🏗️ Arquitetura</h2>
+    <p class="muted">Aplicação client-first: o Next.js serve as páginas e todo acesso a dados/autenticação é feito diretamente pelo navegador via Supabase, usando apenas a chave pública (anon key).</p>
+    <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart LR
+  U["👤 Usuário<br/>(navegador)"] -->|"HTTPS"| APP["Caramelo do Bem<br/>Next.js 14 (App Router)<br/>hospedado na Vercel"]
+  APP -->|"@supabase/supabase-js<br/>(anon key)"| SB["Supabase"]
+
+  subgraph SB[" Supabase "]
+    AUTH["Auth<br/>(e-mail/senha, Google OAuth)"]
+    DB[("Postgres<br/>profiles / ocorrencias / resgates")]
+    RLS["Row Level Security<br/>(policies por tabela)"]
+    STORAGE["Storage<br/>(fotos de ocorrências)"]
+  end
+
+  AUTH --> RLS
+  RLS --> DB
+  APP -->|"upload de fotos"| STORAGE
+  APP -->|"tiles do mapa"| MAP["Leaflet / OpenStreetMap"]
+</pre>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🗃️ Modelo de dados</h2>
+    <p class="muted">Baseado no schema em <code>scriptBancoDeDadosSupabase.sql</code>, aplicado no Postgres do Supabase.</p>
+    <div class="mermaid-wrap">
+<pre class="mermaid">
+erDiagram
+  PROFILES {
+    uuid id PK "= auth.users.id"
+    text nome
+    text telefone
+    text role "reporter | volunteer | ong | vet"
+    text avatar_url
+    text bairro
+    numeric reputacao
+    timestamptz created_at
+  }
+  OCORRENCIAS {
+    uuid id PK
+    uuid user_id FK
+    text titulo
+    text descricao
+    text endereco
+    text bairro
+    numeric lat
+    numeric lng
+    text_array situacao
+    text porte "Pequeno | Médio | Grande"
+    text urgencia "Estável | Atenção | Urgente"
+    text status "ativo | em_resgate | resgatado | arquivado"
+    text foto_url
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  RESGATES {
+    uuid id PK
+    uuid ocorrencia_id FK
+    uuid voluntario_id FK
+    text tipo "resgate | lar_temp | veterinario"
+    text status "confirmado | em_andamento | concluido | cancelado"
+    text observacao
+    timestamptz created_at
+  }
+
+  PROFILES ||--o{ OCORRENCIAS : "reporta"
+  PROFILES ||--o{ RESGATES : "voluntaria-se"
+  OCORRENCIAS ||--o{ RESGATES : "recebe"
+</pre>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🔄 Fluxo principal de uso</h2>
+    <div class="mermaid-wrap">
+<pre class="mermaid">
+sequenceDiagram
+    actor R as Reportador
+    participant App as Caramelo do Bem
+    participant SB as Supabase
+    actor V as Voluntário / ONG / Vet
+
+    R->>App: Login / Cadastro
+    App->>SB: auth.signUp / signIn
+    SB-->>App: sessão + perfil
+
+    R->>App: Reportar ocorrência (foto, local, urgência)
+    App->>SB: insert em ocorrencias
+    SB-->>App: ocorrência criada (status: ativo)
+
+    V->>App: Abrir mapa de ocorrências
+    App->>SB: select ocorrencias (públicas)
+    SB-->>App: lista de ocorrências ativas
+
+    V->>App: Confirmar resgate / lar temp. / atendimento vet.
+    App->>SB: insert em resgates
+    SB-->>App: resgate registrado
+    App->>SB: update ocorrencias.status (em_resgate / resgatado)
+</pre>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📚 Documentação e código</h2>
+    <p>
+      Instruções completas de instalação, configuração do Supabase e deploy estão no
+      <strong>README</strong> do repositório.
+    </p>
+    <div class="badges" style="justify-content:flex-start">
+      <a style="background:var(--brown-light); color:var(--brown); border-color:var(--border)"
+         href="https://github.com/LuizPolo0/caramelo#readme" target="_blank" rel="noopener">📖 Ler o README</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Caramelo do Bem — projeto colaborativo de resgate animal.
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#FFF3DC',
+      primaryTextColor: '#7C4A1E',
+      primaryBorderColor: '#C47A0D',
+      lineColor: '#C47A0D',
+      secondaryColor: '#E8F5EE',
+      tertiaryColor: '#E6F1FB',
+      fontFamily: 'Poppins, sans-serif'
+    }
+  });
+</script>
+</body>
+</html>
