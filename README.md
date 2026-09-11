@@ -154,31 +154,3 @@ A aplicação estará disponível em [http://localhost:3000](http://localhost:30
 | `npm run start` | Sobe o build de produção localmente |
 | `npm run lint` | Roda o linter |
 
-## Deploy em produção (Vercel)
-
-A [Vercel](https://vercel.com/) é a forma mais simples de hospedar este projeto, pois é a criadora do Next.js
-e faz deploy automático a cada push no GitHub.
-
-1. Suba o repositório para o GitHub (veja a seção de publicação abaixo).
-2. Acesse [vercel.com](https://vercel.com/) e faça login com sua conta do GitHub.
-3. Clique em **Add New → Project** e selecione o repositório `caramelo`.
-4. Em **Environment Variables**, adicione as mesmas duas variáveis do `.env.local`:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-5. Clique em **Deploy**. A Vercel detecta o Next.js automaticamente — nenhuma configuração adicional
-   é necessária.
-6. A cada `git push` na branch principal, a Vercel publica uma nova versão automaticamente.
-
-Se o app usar login social (Google), adicione a URL de produção da Vercel na lista de **Redirect URLs**
-em **Authentication → URL Configuration** no painel do Supabase.
-
-## Publicando os diagramas no GitHub Pages
-
-A pasta [`docs/`](./docs) contém uma página estática com a visão geral do projeto e os diagramas de
-arquitetura, modelo de dados e fluxo de uso.
-
-1. Suba o repositório para o GitHub.
-2. No GitHub, vá em **Settings → Pages**.
-3. Em **Source**, selecione **Deploy from a branch**.
-4. Em **Branch**, selecione `main` e a pasta `/docs`, depois clique em **Save**.
-5. Em alguns minutos a página ficará disponível em `https://LuizPolo0.github.io/caramelo/`.
