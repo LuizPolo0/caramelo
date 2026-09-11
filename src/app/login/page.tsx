@@ -14,6 +14,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useToast } from '@/hooks/useToast'
 import { Button } from '@/components/ui/button'
 import { Input, Label } from '@/components/ui/form'
+import { authErrorMessage } from '@/lib/utils'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -31,7 +32,7 @@ export default function LoginPage() {
     setLoading(true); setError('')
     const { error: err } = await signIn({ email, password })
     setLoading(false)
-    if (err) { setError('E-mail ou senha incorretos.'); return }
+    if (err) { setError(authErrorMessage(err.message)); return }
     addToast('Bem-vindo de volta!', 'success')
     router.replace('/inicio')
   }

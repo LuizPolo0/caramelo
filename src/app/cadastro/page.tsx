@@ -18,7 +18,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useToast } from '@/hooks/useToast'
 import { Button } from '@/components/ui/button'
 import { Input, Label } from '@/components/ui/form'
-import { cn } from '@/lib/utils'
+import { cn, authErrorMessage } from '@/lib/utils'
 
 const ROLES = [
   { id: 'reporter',  icon: Megaphone, label: 'Reportador',   desc: 'Reporto cachorros em situação de rua' },
@@ -65,7 +65,7 @@ export default function RegisterPage() {
     setLoading(true); setError('')
     const { error: err } = await signUp({ email: form.email, password: form.password, nome: form.nome, telefone: form.telefone, role: form.role })
     setLoading(false)
-    if (err) { setError(err.message); return }
+    if (err) { setError(authErrorMessage(err.message)); return }
     addToast('Conta criada com sucesso!', 'success')
     router.replace('/inicio')
   }
