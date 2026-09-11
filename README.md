@@ -28,6 +28,7 @@ lar temporário ou registrar atendimento veterinário.
 - 📢 Reportar ocorrência com foto, endereço/geolocalização, porte e urgência do animal
 - 🗺️ Mapa interativo (Leaflet) com todas as ocorrências ativas
 - 🐕 Página de detalhe da ocorrência com histórico de resgates
+- 💬 Chat por ocorrência entre reportador, voluntários, ONGs e veterinários
 - 🤲 Confirmação de resgate, lar temporário ou atendimento veterinário
 - 📊 Painel dedicado para ONGs e veterinários acompanharem ocorrências e resgates
 - 👤 Perfil do usuário com estatísticas de ocorrências reportadas e resgates
@@ -117,6 +118,9 @@ docs/                            # Página estática publicada no GitHub Pages
 >   exists (select 1 from public.profiles where profiles.id = auth.uid() and profiles.role in ('ong','vet'))
 > );
 > ```
+> Depois, em **Database → Replication**, ative a réplica em tempo real da tabela `mensagens`
+> (mesma configuração que `ocorrencias` e `resgates` já devem ter) para o chat da página de
+> ocorrência atualizar ao vivo para todo mundo.
 
 ## Rodando localmente
 
